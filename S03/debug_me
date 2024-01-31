@@ -1,0 +1,6 @@
+The problem in this exercise is ZeroDivisionError, the function f() doesn't have an exception when "t1" is equal to zero,
+so if "c" and "d" have the same value "t1" will be 0, so it will produce an error.
+In the second "print" it happens, "c" and "d" value both 3, so ZeroDivisionError happens.
+To solve this we can write a try and a exception for ZeroDivisionError and it will be solved.
+
+I knew where it was the error putting a breakpoint at the second print
