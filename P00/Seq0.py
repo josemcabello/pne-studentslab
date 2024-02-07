@@ -26,5 +26,14 @@ def seq_count_base(seq, base):
     a = seq.count(base)
     print(base + ": " + str(a))
 
-
-
+def seq_count(seq):
+    dict = {}
+    a = seq.count("A")
+    c = seq.count("C")
+    g = seq.count("G")
+    t = seq.count("T")
+    dict["A"] = a
+    dict["C"] = c
+    dict["G"] = g
+    dict["T"] = t
+    return dict
