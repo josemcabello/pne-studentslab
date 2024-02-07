@@ -21,3 +21,10 @@ def seq_read_fasta(filename):
 def seq_len(seq):
     return len(seq)
 
+
+def seq_count_base(seq, base):
+    a = seq.count(base)
+    print(base + ": " + str(a))
+
+
+
