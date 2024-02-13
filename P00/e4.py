@@ -18,6 +18,3 @@ for a in list_of_seq:
     for b in list_of_bases:
         seq_count_base(a, b)
     a1 += 1
-
-
-#jsiskhsksjhskjsgjjhgjklk
