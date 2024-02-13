@@ -7,4 +7,5 @@ seq = ""
 for i in list_contents:
     seq += str(i)
 print("Gene U5:")
-seq_complement(seq)
+a = seq_complement(seq)
+print("Complement:", a)

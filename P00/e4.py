@@ -16,5 +16,6 @@ a1 = 0
 for a in list_of_seq:
     print("Gene " + str(list_of_files[a1]))
     for b in list_of_bases:
-        seq_count_base(a, b)
+        c = seq_count_base(a, b)
+        print(b + ": " + str(c))
     a1 += 1

@@ -24,7 +24,7 @@ def seq_len(seq):
 
 def seq_count_base(seq, base):
     a = seq.count(base)
-    print(base + ": " + str(a))
+    return a
 
 def seq_count(seq):
     dict = {}
@@ -43,8 +43,7 @@ def seq_reverse(seq, n):
     reverse = ""
     for i in a_seq:
         reverse = str(i) + reverse
-    print("Fragment:", a_seq)
-    print("Reverse:", reverse)
+    return reverse
 
 def seq_complement(seq):
     complement_seq = ""
@@ -57,8 +56,7 @@ def seq_complement(seq):
             complement_seq += "C"
         elif e == "T":
             complement_seq += "A"
-    print("Frag:", seq)
-    print("Comp:", complement_seq)
+    return complement_seq
 
 
 def most_common(filename):
@@ -100,3 +98,4 @@ def most_common(filename):
     elif x == t:
         solution = "T"
     print("Gene", str(filename), "Most frequent base:", solution)
+    
