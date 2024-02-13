@@ -83,12 +83,20 @@ def most_common(filename):
             t += 1
     x = 0
     if x < a:
-        x == a
+        x = a
     if x < c:
-        x == c
+        x = c
     if x < g:
-        x == g
+        x = g
     if x < t:
-        x == t
-    solution =
-    print("Gene", str(filename), "Most frequent base:",)
+        x = t
+
+    if x == a:
+        solution = "A"
+    elif x == c:
+        solution = "C"
+    elif x == g:
+        solution = "G"
+    elif x == t:
+        solution = "T"
+    print("Gene", str(filename), "Most frequent base:", solution)
