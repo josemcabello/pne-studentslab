@@ -48,13 +48,72 @@ class Seq:
         if self.strbases == "NULL":
             reverse = "NULL"
         elif self.strbases == "Error":
-            reverse = "Error"
+            reverse = "ERROR"
         else:
             a_seq = self.strbases[0:]
             reverse = ""
             for i in a_seq:
                 reverse = str(i) + reverse
         return reverse
+
+    def complement(self):
+        if self.strbases == "NULL":
+            complement = "NULL"
+        elif self.strbases == "Error":
+            complement = "ERROR"
+        else:
+            seq = self.strbases
+            complement = ""
+            for e in seq:
+                if e == "A":
+                    complement += "T"
+                elif e == "C":
+                    complement += "G"
+                elif e == "G":
+                    complement += "C"
+                elif e == "T":
+                    complement += "A"
+        return complement
+
+    def most_common(self, filename):
+        file_contents = Path(filename).read_text()
+        list_contents = file_contents.split("\n")
+        list_contents.pop(0)
+        seq = ""
+        for i in list_contents:
+            seq += str(i)
+        a = 0
+        c = 0
+        g = 0
+        t = 0
+        for e in seq:
+            if e == "A":
+                a += 1
+            elif e == "C":
+                c += 1
+            elif e == "G":
+                g += 1
+            elif e == "T":
+                t += 1
+        x = 0
+        if x < a:
+            x = a
+        if x < c:
+            x = c
+        if x < g:
+            x = g
+        if x < t:
+            x = t
+
+        if x == a:
+            solution = "A"
+        elif x == c:
+            solution = "C"
+        elif x == g:
+            solution = "G"
+        elif x == t:
+            solution = "T"
+
     def __str__(self):
         """Method called when the object is being printed"""
         # -- We just return the string with the sequence

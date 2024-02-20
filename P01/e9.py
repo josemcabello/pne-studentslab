@@ -1,4 +1,5 @@
 from Seq1 import *
+from Seq0 import *
 def print_seqs(seq_list):
     for index, seq in enumerate(seq_list):
         length = seq.len()
@@ -11,9 +12,9 @@ def print_seqs(seq_list):
         print("Rev:", reverse)
         print("Comp:", complement)
 
-s1 = Seq()
-s2 = Seq("TATAC")
-s3 = Seq("Invalid sequence")
 
-seq_list = [s1, s2, s3]
+
+i = seq_read_fasta("U5.txt")
+s1 = Seq(i)
+seq_list = [s1]
 print_seqs((seq_list))

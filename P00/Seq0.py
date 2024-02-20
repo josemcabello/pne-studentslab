@@ -2,7 +2,7 @@ def seq_ping():       # en este fichero vamos a guardar las funciones que usarem
     print("OK")
 
 from pathlib import Path
-def seq_read_fasta(filename):
+def seq_read_fasta(filename, n=100000000000000):
 
     first_20 = ""
     file_contents = Path(filename).read_text()
@@ -11,9 +11,9 @@ def seq_read_fasta(filename):
 
     for i in list_contents:
         for e in i:
-            if len(first_20) == 20:
+            if len(first_20) == n:
                 break
-            elif len(first_20) < 21:
+            elif len(first_20) < n + 1:
                 first_20 += e
     return first_20
 
