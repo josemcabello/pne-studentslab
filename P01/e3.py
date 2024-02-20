@@ -7,6 +7,7 @@ def print_seqs(seq_list):
 
 s1 = Seq()
 s2 = Seq("TATAC")
+s3 = Seq("Invalid sequence")
 
-seq_list = [s1, s2]
+seq_list = [s1, s2, s3]
 print_seqs((seq_list))
