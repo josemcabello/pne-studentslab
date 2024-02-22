@@ -1,5 +1,4 @@
 from Seq1 import *
-from Seq0 import *
 def print_seqs(seq_list):
     for index, seq in enumerate(seq_list):
         length = seq.len()
@@ -14,7 +13,10 @@ def print_seqs(seq_list):
 
 
 
-i = seq_read_fasta("U5.txt")
-s1 = Seq(i)
-seq_list = [s1]
+# -- Create a Null sequence
+s = Seq()
+s1 = s.read_fasta("U5.txt")
+# -- Initialize the null seq with the given file in fasta format
+#s1 = Seq(s.read_fasta("U5.txt"))
+seq_list = [s]
 print_seqs((seq_list))
