@@ -13,4 +13,4 @@ PORT = 8080
 c = Client(IP, PORT)
 
 # -- Test the ping method
-c.ping()
+c.ping() #ya
