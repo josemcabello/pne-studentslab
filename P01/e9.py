@@ -11,9 +11,12 @@ def print_seqs(seq_list):
         print("Rev:", reverse)
         print("Comp:", complement)
 
-s1 = Seq()
-s2 = Seq("TATAC")
-s3 = Seq("Invalid sequence")
 
-seq_list = [s1, s2, s3]
+
+# -- Create a Null sequence
+s = Seq()
+s1 = s.read_fasta("U5.txt")
+# -- Initialize the null seq with the given file in fasta format
+#s1 = Seq(s.read_fasta("U5.txt"))
+seq_list = [s]
 print_seqs((seq_list))

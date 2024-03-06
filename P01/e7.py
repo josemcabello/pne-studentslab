@@ -1,3 +1,4 @@
+from Seq1 import *
 def print_seqs(seq_list):
     for index, seq in enumerate(seq_list):
         length = seq.len()
