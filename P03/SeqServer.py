@@ -2,17 +2,38 @@ import socket
 
 
 def send_response(msg):
+    response = ""
     if msg == "PING":
-        response = "OK!"
+        response = "OK!" + "\n"
         print("PING command!")
         print("OK!")
+    elif msg.startswith("GET") and (0 <= int(msg[-1]) < 5):
+        response = get_response(msg[-1])
+        print("GET")
+        print(response)
+    elif not(0 <= int(msg[-1]) < 5):
+        response = "No sequence like this"
     return response
+
+def get_response(number):
+    list_of_sequence = ["ACAGACGACGACACGACTCGACAGATGCGTCG", "GTGTGTGTGTGTGTGTTGGTGTAC", "ACGTACGTACGTACGTACGT", "TGCATGCATGCATGCATGCA", "TTTTTTTTTTTTTTTTTTTTT"]
+    number = int(number)
+    response = list_of_sequence[number] + "\n"
+    return response
+
+def info_response(msg):
+
+    seq = msg[5:]
+    print(len(seq))
+    print
+
+
 class SeqServer:
 
     def __init__(self):
         self.MAX_OPEN_REQUESTS = 5
         self.IP = "127.0.0.1"
-        self.PORT = 1234
+        self.PORT = 4321
         print("SEQ Server configured!")
 
         # create an INET, STREAMing socket
