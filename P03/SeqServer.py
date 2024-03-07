@@ -11,8 +11,8 @@ def send_response(msg):
         response = get_response(msg[-1])
         print("GET")
         print(response)
-    elif not(0 <= int(msg[-1]) < 5):
-        response = "No sequence like this"
+    elif msg.startswith("INFO"):
+        response = info_response(msg)
     return response
 
 def get_response(number):
@@ -22,10 +22,19 @@ def get_response(number):
     return response
 
 def info_response(msg):
-
+    letters = ["A", "C", "G", "T"]
     seq = msg[5:]
+    count1 = [seq.count("A"), seq.count("C"), seq.count("G"), seq.count("T")]
+    porc = [str(100 * seq.count("A") / len(seq)) + " %", str(100 * seq.count("C") / len(seq)) + " %", str(100 * seq.count("G") / len(seq)) + " %", str(100 * seq.count("T") / len(seq)) + " %"]
     print(len(seq))
-    print
+    i = 0
+    response = ""
+    while i < 4:
+        a = str(letters[i]) + " : " + str(count1[i]) + " (" + str(porc[i]) + ")" + "\n"
+        print(a)
+        response += a
+        i += 1
+    return response
 
 
 class SeqServer:
@@ -33,7 +42,7 @@ class SeqServer:
     def __init__(self):
         self.MAX_OPEN_REQUESTS = 5
         self.IP = "127.0.0.1"
-        self.PORT = 4321
+        self.PORT = 1111
         print("SEQ Server configured!")
 
         # create an INET, STREAMing socket
