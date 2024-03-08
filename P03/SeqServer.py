@@ -1,18 +1,27 @@
 import socket
-
+from Seq1 import *
 
 def send_response(msg):
     response = ""
     if msg == "PING":
-        response = "OK!" + "\n"
         print("PING command!")
+        response = "OK!" + "\n"
         print("OK!")
     elif msg.startswith("GET") and (0 <= int(msg[-1]) < 5):
         response = get_response(msg[-1])
         print("GET")
         print(response)
     elif msg.startswith("INFO"):
+        print("INFO")
         response = info_response(msg)
+    elif msg.startswith("COMP"):
+        print("COMP")
+        response = comp_response(msg)
+        print(response)
+    elif msg.startswith("REV"):
+        print("REV")
+        response = rev_response(msg)
+        print(response)
     return response
 
 def get_response(number):
@@ -36,13 +45,22 @@ def info_response(msg):
         i += 1
     return response
 
-
+def rev_response(msg):
+    seq = msg[4:]
+    rev = Seq(seq)
+    new_seq = rev.reverse()
+    return new_seq
+def comp_response(msg):
+    seq = msg[5:]
+    comp_seq = Seq(seq)
+    new_seq = comp_seq.complement()
+    return new_seq
 class SeqServer:
 
     def __init__(self):
         self.MAX_OPEN_REQUESTS = 5
         self.IP = "127.0.0.1"
-        self.PORT = 1111
+        self.PORT = 3333
         print("SEQ Server configured!")
 
         # create an INET, STREAMing socket
@@ -56,7 +74,7 @@ class SeqServer:
                 print("Waiting for clients")
                 (clientsocket, address) = serversocket.accept()
                 msg = clientsocket.recv(2048).decode("utf-8")
-                response = send_response(msg)
+                response = send_response(msg) + "\n"
                 send_bytes = str.encode(response)
                 # We must write bytes, not a string
                 clientsocket.send(send_bytes)
