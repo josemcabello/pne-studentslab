@@ -22,6 +22,12 @@ def send_response(msg):
         print("REV")
         response = rev_response(msg)
         print(response)
+    elif msg.startswith("GENE"):
+        print("GENE")
+        response = gene_response(msg)
+        print(response)
+        return response
+
     return response
 
 def get_response(number):
@@ -55,12 +61,19 @@ def comp_response(msg):
     comp_seq = Seq(seq)
     new_seq = comp_seq.complement()
     return new_seq
+
+
+def gene_response(msg):
+    file = msg[5:]
+    seq = Seq()
+    response = seq.read_fasta(file)
+    return response
 class SeqServer:
 
     def __init__(self):
         self.MAX_OPEN_REQUESTS = 5
         self.IP = "127.0.0.1"
-        self.PORT = 3333
+        self.PORT = 8080
         print("SEQ Server configured!")
 
         # create an INET, STREAMing socket
