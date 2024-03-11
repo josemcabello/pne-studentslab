@@ -1,7 +1,7 @@
 from SeqServer import *
 from Client0 import *
 IP = "212.128.255.91"
-PORT = 2345
+PORT = 1234
 
 # -- Create a client object
 c = Client(IP, PORT)
