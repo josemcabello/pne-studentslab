@@ -1,6 +1,6 @@
 from SeqServer import *
 from Client0 import *
-IP = "212.128.255.91"
+IP = "212.128.255.66"
 PORT = 1234
 
 # -- Create a client object

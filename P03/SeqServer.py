@@ -72,7 +72,7 @@ class SeqServer:
 
     def __init__(self):
         self.MAX_OPEN_REQUESTS = 5
-        self.IP = "212.128.255.91"
+        self.IP = "212.128.255.66"
         self.PORT = 1234
         print("SEQ Server configured!")
 
