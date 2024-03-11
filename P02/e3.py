@@ -15,5 +15,5 @@ c = Client(IP, PORT)
 print(c)
 
 print("Sending a message to the server...")
-response = c.talk("Testing!!!")
-print(f"Response: {response}")
+response = c.talk("GET 1")
+#print(f"Response: {response}")

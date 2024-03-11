@@ -33,7 +33,7 @@ def send_response(msg):
 def get_response(number):
     list_of_sequence = ["ACAGACGACGACACGACTCGACAGATGCGTCG", "GTGTGTGTGTGTGTGTTGGTGTAC", "ACGTACGTACGTACGTACGT", "TGCATGCATGCATGCATGCA", "TTTTTTTTTTTTTTTTTTTTT"]
     number = int(number)
-    response = list_of_sequence[number] + "\n"
+    response = list_of_sequence[number]
     return response
 
 def info_response(msg):
@@ -43,7 +43,7 @@ def info_response(msg):
     porc = [str(100 * seq.count("A") / len(seq)) + " %", str(100 * seq.count("C") / len(seq)) + " %", str(100 * seq.count("G") / len(seq)) + " %", str(100 * seq.count("T") / len(seq)) + " %"]
     print(len(seq))
     i = 0
-    response = ""
+    response = "Sequence: " + seq + "\n" + "Total length:" + str(len(seq)) + "\n"
     while i < 4:
         a = str(letters[i]) + " : " + str(count1[i]) + " (" + str(porc[i]) + ")" + "\n"
         print(a)
@@ -72,8 +72,8 @@ class SeqServer:
 
     def __init__(self):
         self.MAX_OPEN_REQUESTS = 5
-        self.IP = "127.0.0.1"
-        self.PORT = 8080
+        self.IP = "212.128.255.91"
+        self.PORT = 2345
         print("SEQ Server configured!")
 
         # create an INET, STREAMing socket
