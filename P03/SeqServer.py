@@ -23,7 +23,7 @@ def send_response(msg):
         response = rev_response(msg)
         print(response)
     elif msg.startswith("GENE"):
-        print("GENE")
+        print("GENE" + msg[5:])
         response = gene_response(msg)
         print(response)
         return response
@@ -72,8 +72,8 @@ class SeqServer:
 
     def __init__(self):
         self.MAX_OPEN_REQUESTS = 5
-        self.IP = "212.128.255.66"
-        self.PORT = 1234
+        self.IP = "212.128.255.91"
+        self.PORT = 8080
         print("SEQ Server configured!")
 
         # create an INET, STREAMing socket
@@ -93,7 +93,8 @@ class SeqServer:
                 clientsocket.send(send_bytes)
                 clientsocket.close()
 
-        except socket.error:
+        except socket.error as e:
+            print(e)
             print("Problems using ip {} port {}. Is the IP correct? Do you have port permission?".format(self.IP, self.PORT))
 
         except KeyboardInterrupt:

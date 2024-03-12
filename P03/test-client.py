@@ -1,7 +1,7 @@
 from SeqServer import *
 from Client0 import *
-IP = "212.128.255.66"
-PORT = 1234
+IP = "212.128.255.91"
+PORT = 8080
 
 # -- Create a client object
 c = Client(IP, PORT)
@@ -33,7 +33,7 @@ print(e)
 response3 = c.talk(e)
 print(response3)
 
-list12 = ["U5", "ADA", "FRAT1", "FXN", "RNU6_269P"]
+list12 = ["U5.txt", "ADA.txt", "FRAT1.txt", "FXN.txt", "RNU6_269P.txt"]
 print("* Testing GENE...")
 for ee in list12:
     print(ee)
