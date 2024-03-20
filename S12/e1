@@ -1,0 +1,19 @@
+1) http://127.0.0.1:8080/hello
+- Which is the request line?   SOLUTION:  OPTIONS /hello HTTP/1.1
+- Which is the resource that the client is asking for?     SOLUTION:  hello
+
+2) http://127.0.0.1:8080/file.html
+- Which is the request line?   SOLUTION:  OPTIONS /file.html HTTP/1.1
+- Which is the resource that the client is asking for?     SOLUTION:    file.html
+
+3) http://127.0.0.1:8080/hi/there?name=virus&type=corona
+- Which is the request line?   SOLUTION:   GET /hi/there?name=virus&type=corona HTTP/1.1
+- Which is the resource that the client is asking for?     SOLUTION:    there?name=virus&type=corona
+
+
+
+
+
+
+What should be the URL that we have to write in the browser for accessing the /dna/u5 resource?
+SOLUTION:  http://127.0.0.1:8080/dna/u5
