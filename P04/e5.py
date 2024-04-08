@@ -34,6 +34,12 @@ def process_client(s):
         file = "html/info/A.html"
     elif req_line.__contains__("info/C"):
         file = "html/info/C.html"
+    elif req_line.__contains__("info/G"):
+        file = "html/info/G.html"
+    elif req_line.__contains__("info/T"):
+        file = "html/info/T.html"
+    else:
+        file = "html/error.html"
     # This new contents are written in HTML language
     body = Path(file).read_text()
     # -- Status line: We respond that everything is ok (200 code)
