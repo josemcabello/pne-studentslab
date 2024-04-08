@@ -1,9 +1,9 @@
 1) http://127.0.0.1:8080/hello
-- Which is the request line?   SOLUTION:  OPTIONS /hello HTTP/1.1
-- Which is the resource that the client is asking for?     SOLUTION:  hello
+- Which is the request line?   SOLUTION:  GET /favicon.ico HTTP/1.1
+- Which is the resource that the client is asking for?     SOLUTION:  favicon.ico
 
 2) http://127.0.0.1:8080/file.html
-- Which is the request line?   SOLUTION:  OPTIONS /file.html HTTP/1.1
+- Which is the request line?   SOLUTION:  GET /file.html HTTP/1.1
 - Which is the resource that the client is asking for?     SOLUTION:    file.html
 
 3) http://127.0.0.1:8080/hi/there?name=virus&type=corona
