@@ -24,10 +24,19 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         # We are NOT processing the client's request
         # It is a happy server: It always returns a message saying
         # that everything is ok
+        html = "html" + str(self.path)
+        flag = True
+        if html == "html/":
+            html = "html/index.html"
+        else:
+            try:
+                contents = Path(html).read_text()
+            except Exception:
+                flag = False
 
         # Message to send back to the clinet
-        if self.path == "/" or self.path == "/index.html":
-            contents = Path('html/index.html').read_text()
+        if self.path == "/" or flag == True:
+            contents = Path(html).read_text()
         else:
             contents = Path('html/error.html').read_text()
 
