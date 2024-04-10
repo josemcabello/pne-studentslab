@@ -2,17 +2,15 @@ import http.server
 import socketserver
 import termcolor
 from pathlib import Path
-
 # Define the Server's port
 PORT = 8080
-
 
 # -- This is for preventing the error: "Port already in use"
 socketserver.TCPServer.allow_reuse_address = True
 
 
 # Class with our Handler. It is a called derived from BaseHTTPRequestHandler
-# It means that our class inheritates all his methods and properties
+# It means that our class inherits all his methods and properties
 class TestHandler(http.server.BaseHTTPRequestHandler):
 
     def do_GET(self):
@@ -22,9 +20,24 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         # Print the request line
         termcolor.cprint(self.requestline, 'green')
 
-        # Open the form1.html file
-        # Read the index from the file
-        if self.path == "/":
+        # IN this simple server version:
+        # We are NOT processing the client's request
+        # It is a happy server: It always returns a message saying
+        # that everything is ok
+        html = "html" + str(self.path)
+        flag = True
+        if html == "html/":
+            html = "html/form-1.html"
+        else:
+            try:
+                contents = Path(html).read_text()
+            except Exception:
+                flag = False
+
+        # Message to send back to the clinet
+        if self.path == "/" or flag == True:
+            contents = Path(html).read_text()
+        elif self.path.startswith("/echo?msg="):
             contents = Path('html/form-e1.html').read_text()
         else:
             contents = Path('html/error.html').read_text()
