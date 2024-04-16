@@ -32,14 +32,20 @@ def process_client(s):
     # Body (content to send)
     if req_line.__contains__("info/A"):
         file = "html/info/A.html"
+        body = Path(file).read_text()
     elif req_line.__contains__("info/C"):
         file = "html/info/C.html"
+        body = Path(file).read_text()
     elif req_line.__contains__("info/G"):
         file = "html/info/G.html"
+        body = Path(file).read_text()
     elif req_line.__contains__("info/T"):
         file = "html/info/T.html"
+        body = Path(file).read_text()
+    else:
+        body = ""
+
     # This new contents are written in HTML language
-    body = Path(file).read_text()
     # -- Status line: We respond that everything is ok (200 code)
     status_line = "HTTP/1.1 200 OK\n"
 

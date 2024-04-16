@@ -2,6 +2,7 @@ import http.server
 import socketserver
 import termcolor
 from pathlib import Path
+from urllib.parse import parse_qs, urlparse
 # Define the Server's port
 PORT = 8080
 
@@ -19,6 +20,10 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         # Print the request line
         termcolor.cprint(self.requestline, 'green')
+
+        url_path = urlparse(self.path)
+        path = url_path.path  # we get it from here
+        arguments = parse_qs(url_path.query)  # es un diccionario que almacena los mensajes q se envian desde la cajita
 
         # IN this simple server version:
         # We are NOT processing the client's request

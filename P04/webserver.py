@@ -38,7 +38,7 @@ def process_client(s):
         file = "html/info/G.html"
     elif req_line.__contains__("info/T"):
         file = "html/info/T.html"
-    elif req_line.__contains__("index"):
+    elif req_line.__contains__("/"):
         file = "html/index.html"
     else:
         file = "html/error.html"
