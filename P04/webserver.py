@@ -20,25 +20,27 @@ def process_client(s):
 
     # -- The request line is the first
     req_line = lines[0]
+    mypath = req_line.split(" ")
 
     print("Request line: ", end="")
     termcolor.cprint(req_line, "green")
-
+    print(mypath)
+    print(mypath[1])
     # -- Generate the response message
     # It has the following lines
     # Status line
     # header
     # blank line
     # Body (content to send)
-    if req_line.__contains__("info/A"):
+    if mypath[1] == "/info/A":
         file = "html/info/A.html"
-    elif req_line.__contains__("info/C"):
+    elif mypath[1] == "/info/C":
         file = "html/info/C.html"
-    elif req_line.__contains__("info/G"):
+    elif mypath[1] == "/info/G":
         file = "html/info/G.html"
-    elif req_line.__contains__("info/T"):
+    elif mypath[1] == "/info/T":
         file = "html/info/T.html"
-    elif req_line.__contains__("/"):
+    elif mypath[1] == "/":
         file = "html/index.html"
     else:
         file = "html/error.html"

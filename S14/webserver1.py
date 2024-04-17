@@ -2,7 +2,7 @@ import http.server
 import socketserver
 
 # Define the Server's port
-PORT = 8081
+PORT = 8080
 
 # -- This is for preventing the error: "Port already in use"
 socketserver.TCPServer.allow_reuse_address = True
@@ -22,3 +22,4 @@ with socketserver.TCPServer(("", PORT), Handler) as httpd:
     except KeyboardInterrupt:
         print("Server Stopped!")
         httpd.server_close()
+
