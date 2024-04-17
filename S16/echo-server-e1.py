@@ -3,11 +3,20 @@ import socketserver
 import termcolor
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
+import jinja2 as j
 # Define the Server's port
 PORT = 8080
 
 # -- This is for preventing the error: "Port already in use"
 socketserver.TCPServer.allow_reuse_address = True
+
+
+def read_html_file(filename):
+    contents = Path("html/" + filename).read_text()
+    contents = j.Template(contents)
+    return contents
+
+# contents = read_html_file("form-e1.html").render(context={"todisplay": text})  # provide a dictionary to build the form
 
 
 # Class with our Handler. It is a called derived from BaseHTTPRequestHandler
@@ -29,7 +38,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         # We are NOT processing the client's request
         # It is a happy server: It always returns a message saying
         # that everything is ok
-        html = "html" + str(self.path)
+        html = "html" + str(path)
         flag = True
         if html == "html/":
             html = "html/form-1.html"
@@ -40,9 +49,9 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 flag = False
 
         # Message to send back to the clinet
-        if self.path == "/" or flag == True:
+        if path == "/" or flag == True:
             contents = Path(html).read_text()
-        elif self.path.startswith("/echo?msg="):
+        elif path.startswith("/echo?msg="):
             contents = Path('html/form-e1.html').read_text()
         else:
             contents = Path('html/error.html').read_text()
