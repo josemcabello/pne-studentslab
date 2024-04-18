@@ -4,48 +4,34 @@ import termcolor
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 import jinja2 as j
-# Define the Server's port
+
 PORT = 8080
-
-# -- This is for preventing the error: "Port already in use"
 socketserver.TCPServer.allow_reuse_address = True
-
 
 def read_html_file(filename):
     contents = Path("html/" + filename).read_text()
     contents = j.Template(contents)
     return contents
 
-
-
-
-# Class with our Handler. It is a called derived from BaseHTTPRequestHandler
-# It means that our class inherits all his methods and properties
 class TestHandler(http.server.BaseHTTPRequestHandler):
-
     def do_GET(self):
-        """This method is called whenever the client invokes the GET method
-        in the HTTP protocol request"""
-
-        # Print the request line
         termcolor.cprint(self.requestline, 'green')
 
         url_path = urlparse(self.path)
-        path = url_path.path  # we get it from here
-        arguments = parse_qs(url_path.query)  # es un diccionario que almacena los mensajes q se envian desde la cajita
-
-        # IN this simple server version:
-        # We are NOT processing the client's request
-        # It is a happy server: It always returns a message saying
-        # that everything is ok
+        path = url_path.path
+        arguments = parse_qs(url_path.query)
         print(path)
-        # Message to send back to the clinet
+
         if path == "/":
-            contents = Path("html/form-1.html").read_text()
-        elif path.startswith("/echo"):
-            text = str(arguments["msg"])
+            contents = Path("html/index.html").read_text()
+        elif path.startswith("/myserver"):
+            try:
+                arguments["chk"] == "on"
+                text = str(arguments["msg"]).upper()
+            except KeyError:
+                text = str(arguments["msg"])
             print(arguments)
-            contents = read_html_file("form-e1.html").render(context={"todisplay": text})  # provide a dictionary to build the form
+            contents = read_html_file("form-e2.html").render(context={"todisplay": text})  # provide a dictionary to build the form
         else:
             contents = Path('html/error.html').read_text()
 

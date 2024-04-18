@@ -41,11 +41,15 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         print(path)
         # Message to send back to the clinet
         if path == "/":
-            contents = Path("html/form-1.html").read_text()
-        elif path.startswith("/echo"):
-            text = str(arguments["msg"])
+            contents = Path("html/form-2.1.html").read_text()
+        elif path.startswith("/myserver"):
+            try:
+                arguments["chk"] == "on"
+                text = str(arguments["msg"]).upper()
+            except KeyError:
+                text = str(arguments["msg"])
             print(arguments)
-            contents = read_html_file("form-e1.html").render(context={"todisplay": text})  # provide a dictionary to build the form
+            contents = read_html_file("form-e2.html").render(context={"todisplay": text})  # provide a dictionary to build the form
         else:
             contents = Path('html/error.html').read_text()
 
