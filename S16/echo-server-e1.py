@@ -16,7 +16,7 @@ def read_html_file(filename):
     contents = j.Template(contents)
     return contents
 
-# contents = read_html_file("form-e1.html").render(context={"todisplay": text})  # provide a dictionary to build the form
+
 
 
 # Class with our Handler. It is a called derived from BaseHTTPRequestHandler
@@ -38,21 +38,14 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         # We are NOT processing the client's request
         # It is a happy server: It always returns a message saying
         # that everything is ok
-        html = "html" + str(path)
-        flag = True
-        if html == "html/":
-            html = "html/form-1.html"
-        else:
-            try:
-                contents = Path(html).read_text()
-            except Exception:
-                flag = False
-
+        print(path)
         # Message to send back to the clinet
-        if path == "/" or flag == True:
-            contents = Path(html).read_text()
-        elif path.startswith("/echo?msg="):
-            contents = Path('html/form-e1.html').read_text()
+        if path == "/":
+            contents = Path("html/form-1.html").read_text()
+        elif path.startswith("/echo"):
+            text = arguments["msg"]
+            print(arguments)
+            contents = read_html_file("form-e1.html").render(context={"todisplay": text})  # provide a dictionary to build the form
         else:
             contents = Path('html/error.html').read_text()
 
