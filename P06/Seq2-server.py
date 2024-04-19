@@ -7,7 +7,7 @@ import jinja2 as j
 
 PORT = 8080
 socketserver.TCPServer.allow_reuse_address = True
-
+list_of_sequences = ["ACACACACACCACACAAC", "GTGTGGTGTGTGGTGTGTGTGT", "ACGTACGTACGTACGTACGTACGT", "AGAGAGAGAGAGAGGAGAGA", "CTCTCTCTCTCCTCTCTCTCTCTCCT"]
 def read_html_file(filename):
     contents = Path("html/" + filename).read_text()
     contents = j.Template(contents)
@@ -24,6 +24,15 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         if path == "/":
             contents = Path("html/index.html").read_text()
+        elif path.startswith("/echo"):
+            contents = Path("html/ping.html").read_text()
+        elif path.startswith("/1echo"):
+            text1 = arguments["operation"]
+            text = list_of_sequences[int(text1[0])]
+            sequence = "Sequence number " + text1[0]
+            contents = read_html_file("get.html").render(context={"todisplay": text}).render(context={"todsplay": sequence})
+        elif path.startswith("/2echo"):
+            contents = read_html_file("gene.html").render(context={"todisplay": text})
         elif path.startswith("/myserver"):
             try:
                 arguments["chk"] == "on"
