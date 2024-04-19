@@ -29,10 +29,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         elif path.startswith("/1echo"):
             text1 = arguments["operation"]
             text = list_of_sequences[int(text1[0])]
-            sequence = "Sequence number " + text1[0]
-            contents = read_html_file("get.html").render(context={"todisplay": text}).render(context={"todsplay": sequence})
-        elif path.startswith("/2echo"):
-            contents = read_html_file("gene.html").render(context={"todisplay": text})
+            sequence = text1[0]
+            print(text1[0])
+            contents = read_html_file("get.html").render(context={"body": text, "title": sequence})
+        #elif path.startswith("/2echo"):
+            #contents = read_html_file("gene.html").render(context={"todisplay": text})
         elif path.startswith("/myserver"):
             try:
                 arguments["chk"] == "on"
