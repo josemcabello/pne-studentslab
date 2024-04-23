@@ -35,7 +35,10 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         elif path.startswith("/2echo"):
             name = arguments["operation"]
             name1 = name[0]
-            name2 = "P03/" + name1 + ".txt"
+            if name1 == "RNU6_269P":
+                name2 = "Genes/" + name1
+            else:
+                name2 = "Genes/" + name1 + ".txt"
             text = Path(name2).read_text()
             contents = read_html_file("gene.html").render(context={"body": text, "title": name1})
         elif path.startswith("/myserver"):
