@@ -32,8 +32,12 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             sequence = text1[0]
             print(text1[0])
             contents = read_html_file("get.html").render(context={"body": text, "title": sequence})
-        #elif path.startswith("/2echo"):
-            #contents = read_html_file("gene.html").render(context={"todisplay": text})
+        elif path.startswith("/2echo"):
+            name = arguments["operation"]
+            name1 = name[0]
+            name2 = "P03/" + name1 + ".txt"
+            text = Path(name2).read_text()
+            contents = read_html_file("gene.html").render(context={"body": text, "title": name1})
         elif path.startswith("/myserver"):
             try:
                 arguments["chk"] == "on"
