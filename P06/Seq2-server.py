@@ -13,6 +13,21 @@ def read_html_file(filename):
     contents = j.Template(contents)
     return contents
 
+def info_response(msg):
+    letters = ["A", "C", "G", "T"]
+    seq = msg[5:]
+    count1 = [seq.count("A"), seq.count("C"), seq.count("G"), seq.count("T")]
+    porc = [str(100 * seq.count("A") / len(seq)) + " %", str(100 * seq.count("C") / len(seq)) + " %", str(100 * seq.count("G") / len(seq)) + " %", str(100 * seq.count("T") / len(seq)) + " %"]
+    print(len(seq))
+    i = 0
+    response = "Sequence: " + seq + "\n" + "Total length:" + str(len(seq)) + "\n"
+    while i < 4:
+        a = str(letters[i]) + " : " + str(count1[i]) + " (" + str(porc[i]) + ")" + "\n"
+        print(a)
+        response += a
+        i += 1
+    return response
+
 class TestHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         termcolor.cprint(self.requestline, 'green')
@@ -42,13 +57,20 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             text = Path(name2).read_text()
             contents = read_html_file("gene.html").render(context={"body": text, "title": name1})
         elif path.startswith("/myserver"):
-            try:
-                arguments["chk"] == "on"
-                text = str(arguments["msg"]).upper()
-            except KeyError:
-                text = str(arguments["msg"])
-            print(arguments)
-            contents = read_html_file("form-e2.html").render(context={"todisplay": text})  # provide a dictionary to build the form
+            secuence = arguments["msg"][0]
+
+            if arguments["operation"] == "Info":
+                t_op = "Info"
+                result = info_response((secuence))
+                contents = read_html_file("operation.html").render(context={"secuence": secuence, "operation": t_op, "result": result})
+            elif arguments["operation"] == "Comp":
+                t_op = "Comp"
+                contents = read_html_file("operation.html").render(context={"secuence": secuence, "operation": t_op, "result": result})
+            elif arguments["operation"] == "Rev":
+                t_op = "Rev"
+                contents = read_html_file("operation.html").render(context={"secuence": secuence, "operation": t_op, "result": result})
+
+
         else:
             contents = Path('html/error.html').read_text()
 
