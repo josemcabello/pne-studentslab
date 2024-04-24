@@ -18,15 +18,37 @@ def info_response(msg):
     seq = msg[5:]
     count1 = [seq.count("A"), seq.count("C"), seq.count("G"), seq.count("T")]
     porc = [str(100 * seq.count("A") / len(seq)) + " %", str(100 * seq.count("C") / len(seq)) + " %", str(100 * seq.count("G") / len(seq)) + " %", str(100 * seq.count("T") / len(seq)) + " %"]
-    print(len(seq))
     i = 0
-    response = "Sequence: " + seq + "\n" + "Total length:" + str(len(seq)) + "\n"
+    response = "Total length:" + str(len(seq)) + "<br>"
     while i < 4:
         a = str(letters[i]) + " : " + str(count1[i]) + " (" + str(porc[i]) + ")" + "\n"
-        print(a)
         response += a
+        response += "<br>"
         i += 1
     return response
+
+def rev(msg):
+    len1 = len(msg)
+    i = 0
+    result = ""
+    while i < len1:
+        result += msg[-(i + 1)]
+        i += 1
+    return result
+
+def comp(msg):
+    seq = msg
+    complement = ""
+    for e in seq:
+        if e == "A":
+            complement += "T"
+        elif e == "C":
+            complement += "G"
+        elif e == "G":
+            complement += "C"
+        elif e == "T":
+            complement += "A"
+    return complement
 
 class TestHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
@@ -57,19 +79,21 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             text = Path(name2).read_text()
             contents = read_html_file("gene.html").render(context={"body": text, "title": name1})
         elif path.startswith("/myserver"):
-            secuence = arguments["msg"][0]
-
-            if arguments["operation"] == "Info":
+            print(arguments)
+            sequence = arguments["msg"][0]
+            print(sequence)
+            if arguments["operation"][0] == "Info":
                 t_op = "Info"
-                result = info_response((secuence))
-                contents = read_html_file("operation.html").render(context={"secuence": secuence, "operation": t_op, "result": result})
-            elif arguments["operation"] == "Comp":
+                result = info_response((sequence))
+                contents = read_html_file("operation.html").render(context={"secuence": sequence, "operation": t_op, "result": result})
+            elif arguments["operation"][0] == "Comp":
                 t_op = "Comp"
-                contents = read_html_file("operation.html").render(context={"secuence": secuence, "operation": t_op, "result": result})
-            elif arguments["operation"] == "Rev":
+                result = comp(sequence)
+                contents = read_html_file("operation.html").render(context={"secuence": sequence, "operation": t_op, "result": result})
+            elif arguments["operation"][0] == "Rev":
                 t_op = "Rev"
-                contents = read_html_file("operation.html").render(context={"secuence": secuence, "operation": t_op, "result": result})
-
+                result = rev(sequence)
+                contents = read_html_file("operation.html").render(context={"secuence": sequence, "operation": t_op, "result": result})
 
         else:
             contents = Path('html/error.html').read_text()
