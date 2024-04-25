@@ -8,4 +8,5 @@ for i in list_contents:
     seq += str(i)
 print("Gene U5:")
 a = seq_complement(seq)
+print("Fragment:" + seq)
 print("Complement:", a)
