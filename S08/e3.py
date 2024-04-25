@@ -2,7 +2,7 @@ import socket
 
 # SERVER IP, PORT
 PORT = 1234
-IP = "212.128.255.91" # depends on the computer the server is running
+IP = "212.128.255.86" # depends on the computer the server is running
 flag = True
 while flag:
     # -- Ask the user for the message
