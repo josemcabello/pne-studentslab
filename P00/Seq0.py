@@ -38,8 +38,8 @@ def seq_count(seq):
     dict["T"] = t
     return dict
 
-def seq_reverse(seq, n):
-    a_seq = seq[0:n]
+def seq_reverse(seq):
+    a_seq = seq[0:]
     reverse = ""
     for i in a_seq:
         reverse = str(i) + reverse
@@ -97,5 +97,5 @@ def most_common(filename):
         solution = "G"
     elif x == t:
         solution = "T"
-    print("Gene", str(filename), "Most frequent base:", solution)
+    print("Gene", str(filename[:-4]), ": Most frequent base:", solution)
     

@@ -7,5 +7,6 @@ seq = ""
 print("Gene U5:")
 for i in list_contents:
     seq += str(i)
-a = seq_reverse(seq, 20)
+print("Fragment:" + seq)
+a = seq_reverse(seq)
 print("Reverse: ", a)

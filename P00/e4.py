@@ -14,8 +14,8 @@ for e in list_of_files:
 
 a1 = 0
 for a in list_of_seq:
-    print("Gene " + str(list_of_files[a1]))
+    print("Gene " + str(list_of_files[a1][:-4]) + ":")
     for b in list_of_bases:
         c = seq_count_base(a, b)
-        print(b + ": " + str(c))
+        print(b + ": " + str(c) + "\n")
     a1 += 1
