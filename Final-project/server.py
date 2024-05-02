@@ -20,6 +20,9 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         arguments = parse_qs(url_path.query)
         print(path)
 
+        SERVER = "rest.ensembl.org"
+        ENDPOINTS = "/sequence/id"
+        PARAMS = "?content-type=application/json"
         if path == "/":
             contents = Path("html/index.html").read_text()
 
