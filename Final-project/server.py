@@ -59,14 +59,12 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             contents = read_html_file("listSpecies.html").render(context={"n_o_species": n_o_species, "n_o_lspecies": n_o_lspecies, "info_lspecies": info_lspecies})
 
         elif path.startswith("/karyotype"):
-            ENDPOINTS = "/info/assembly_info"
+            text1 = arguments["specie"][0]
+            ENDPOINTS = "/info/assembly" + "/" + text1
             person = con_ensembl(ENDPOINTS)
             print(person)
-            text1 = arguments["specie"]
-            text = text1[0]
-            sequence = text1[0]
-            print(text)
-            contents = read_html_file("karyotype.html").render(context={"body": text, "title": sequence})
+            info_lspecies = person['karyotype']
+            contents = read_html_file("karyotype.html").render(context={"info_lspecies": info_lspecies})
 
         elif path.startswith("/chromosomeLength"):
             name = arguments["specie"]
