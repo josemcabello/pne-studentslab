@@ -2,9 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>LIST OF SPECIES IN THE BROWSER</title>
 </head>
-<body>
-
+<body style="background-color: lightblue;">
+The total number of species on the ensemble is:
+{{context.n_o_species}}
+<br>
+The limit you have selected is:
+{{context.n_o_lspecies}}
+<br>
+The name of the species are:
+ <ul>
+     {% for e in context.info_lspecies %}
+    <li>{{e}}</li>
+     {% endfor %}
+ </ul>
 </body>
 </html>
