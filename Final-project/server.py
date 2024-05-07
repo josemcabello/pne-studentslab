@@ -38,45 +38,41 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         path = url_path.path
         arguments = parse_qs(url_path.query)
         print(path)
+        try:
+            if path == "/":
+                contents = Path("html/index.html").read_text()
 
+            elif path.startswith("/listSpecies"):
+                ENDPOINTS = "/info/species"
+                person = con_ensembl(ENDPOINTS)
+                n_o_species = len(person["species"])
+                n_o_lspecies = arguments["limit"][0]
+                info = person["species"][:int(n_o_lspecies)]
+                info_lspecies = []
+                for e in info:
+                    a = e['display_name']
+                    info_lspecies.append(a)
 
+                contents = read_html_file("listSpecies.html").render(context={"n_o_species": n_o_species, "n_o_lspecies": n_o_lspecies, "info_lspecies": info_lspecies})
 
+            elif path.startswith("/karyotype"):
+                text1 = arguments["species"][0]
+                ENDPOINTS = "/info/assembly" + "/" + text1
+                person = con_ensembl(ENDPOINTS)
+                print(person)
+                info_lspecies = person['karyotype']
+                contents = read_html_file("karyotype.html").render(context={"info_lspecies": info_lspecies})
 
-        if path == "/":
-            contents = Path("html/index.html").read_text()
+            elif path.startswith("/chromosomeLength"):
+                text1 = arguments["species"][0]
+                ENDPOINTS = "/info/assembly" + "/" + text1
+                person = con_ensembl(ENDPOINTS)
+                print(person)
+                l_o_chr = person["top_level_region"]
+                print(l_o_chr)
+                contents = read_html_file("chromosomeLength.html").render(context={"l_o_chr": l_o_chr})
 
-        elif path.startswith("/listSpecies"):
-            ENDPOINTS = "/info/species"
-            person = con_ensembl(ENDPOINTS)
-            n_o_species = len(person["species"])
-            n_o_lspecies = arguments["limit"][0]
-            info = person["species"][:int(n_o_lspecies)]
-            info_lspecies = []
-            for e in info:
-                a = e['display_name']
-                info_lspecies.append(a)
-
-            contents = read_html_file("listSpecies.html").render(context={"n_o_species": n_o_species, "n_o_lspecies": n_o_lspecies, "info_lspecies": info_lspecies})
-
-        elif path.startswith("/karyotype"):
-            text1 = arguments["specie"][0]
-            ENDPOINTS = "/info/assembly" + "/" + text1
-            person = con_ensembl(ENDPOINTS)
-            print(person)
-            info_lspecies = person['karyotype']
-            contents = read_html_file("karyotype.html").render(context={"info_lspecies": info_lspecies})
-
-        elif path.startswith("/chromosomeLength"):
-            name = arguments["specie"]
-            name1 = name[0]
-            if name1 == "RNU6_269P":
-                name2 = "Genes/" + name1
-            else:
-                name2 = "Genes/" + name1 + ".txt"
-            text = Path(name2).read_text()
-            contents = read_html_file("chromosomeLength.html").render(context={"body": text, "title": name1})
-
-        else:
+        except Exception:
             contents = Path('html/error.html').read_text()
 
         # Generating the response message
