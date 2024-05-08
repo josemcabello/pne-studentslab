@@ -46,8 +46,14 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 ENDPOINTS = "/info/species"
                 person = con_ensembl(ENDPOINTS)
                 n_o_species = len(person["species"])
-                n_o_lspecies = arguments["limit"][0]
-                info = person["species"][:int(n_o_lspecies)]
+                print(arguments)
+                if len(arguments) == 0:
+                    n_o_lspecies = 10000000
+                    info = person["species"][:int(n_o_lspecies)]
+                    n_o_lspecies = "undefined"
+                else:
+                    n_o_lspecies = arguments["limit"][0]
+                    info = person["species"][:int(n_o_lspecies)]
                 info_lspecies = []
                 for e in info:
                     a = e['display_name']
@@ -56,7 +62,8 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 contents = read_html_file("listSpecies.html").render(context={"n_o_species": n_o_species, "n_o_lspecies": n_o_lspecies, "info_lspecies": info_lspecies})
 
             elif path.startswith("/karyotype"):
-                text1 = arguments["species"][0]
+                text = arguments["species"][0]
+                text1 = text.replace(" ", "%20")
                 ENDPOINTS = "/info/assembly" + "/" + text1
                 person = con_ensembl(ENDPOINTS)
                 print(person)
@@ -65,12 +72,41 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
             elif path.startswith("/chromosomeLength"):
                 text1 = arguments["species"][0]
+                print(text1)
+                number_of_chro = arguments["chromo"][0]
+                print(number_of_chro)
                 ENDPOINTS = "/info/assembly" + "/" + text1
                 person = con_ensembl(ENDPOINTS)
                 print(person)
-                l_o_chr = person["top_level_region"]
+                info_lspecies = person['karyotype']
+                print(info_lspecies)
+                i = 0
+                for e in info_lspecies:
+                    if e == number_of_chro:
+                        break
+                    elif i == len(info_lspecies) - 1:
+                        i = "whatever"
+                    else:
+                        i += 1
+                l_o_chr = person["top_level_region"][i]['length']
                 print(l_o_chr)
                 contents = read_html_file("chromosomeLength.html").render(context={"l_o_chr": l_o_chr})
+            elif path.startswith("/geneSeq"):
+                gene = arguments["gene"]
+
+            elif path.startswith("/geneInfo"):
+                gene = arguments["gene"]
+
+            elif path.startswith("/geneCalc"):
+                gene = arguments["gene"]
+
+            elif path.startswith("/geneList"):
+                chromo = arguments["chromo"]
+                start = arguments["start"]
+                end = arguments["end"]
+
+            else:
+                contents = Path('html/error.html').read_text()
 
         except Exception:
             contents = Path('html/error.html').read_text()
