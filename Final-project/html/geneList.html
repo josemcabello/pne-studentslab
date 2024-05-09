@@ -2,9 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>GENES LOCATED IN THE CHROMOSOME</title>
 </head>
-<body>
-
+<body style="background-color: lightblue;">
+<br>
+<h1>Human chromosome: {{context.chromo}} </h1>
+Start: {{context.start}}
+<br>
+End: {{context.end}}
+<br><br>
+ <ul>
+     {% for e in context.l_genes %}
+    <li>{{e}}</li>
+     {% endfor %}
+ </ul>
 </body>
 </html>
