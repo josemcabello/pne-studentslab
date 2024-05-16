@@ -86,22 +86,28 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 contents = read_html_file("chromosomeLength.html").render(context={"l_o_chr": l_o_chr})
             elif path.startswith("/geneSeq"):
                 gene = arguments["gene"][0]
-                ENDPOINTS = "/info/genomes/human"
+                ENDPOINTS = "/lookup/symbol/homo_sapiens/" + gene
                 person = con_ensembl(ENDPOINTS)
-                print(gene)
-                contents = read_html_file("chromosomeLength.html").render(context={"gene": gene, "sequence": sequence})
+                id = person["id"]
+                ENDPOINTS1 = "/sequence/id/" + id
+                person1 = con_ensembl(ENDPOINTS1)
+                sequence = person1["seq"]
+                print(person1)
+                contents = read_html_file("geneSeq.html").render(context={"gene": gene, "sequence": sequence})
 
             elif path.startswith("/geneInfo"):
                 gene = arguments["gene"][0]
-                ENDPOINTS = "/info/genomes/human"
+                ENDPOINTS = "/lookup/symbol/homo_sapiens/"
                 person = con_ensembl(ENDPOINTS)
-                contents = read_html_file("chromosomeLength.html").render(context={"gene": gene, "start": start, "end": end, "n_chromo": n_chromo})
+                id = person["id"]
+                contents = read_html_file("geneInfo.html").render(context={"gene": gene, "id": id, "start": start, "end": end, "n_chromo": n_chromo})
 
             elif path.startswith("/geneCalc"):
                 gene = arguments["gene"][0]
-                ENDPOINTS = "/info/genomes/human"
+                ENDPOINTS = "/lookup/symbol/homo_sapiens/"
                 person = con_ensembl(ENDPOINTS)
-                contents = read_html_file("chromosomeLength.html").render(context={"gene": gene, "length": length, "percentage": percentage})
+                id = person["id"]
+                contents = read_html_file("geneCalc.html").render(context={"gene": gene, "length": length, "percentage": percentage})
 
             elif path.startswith("/geneList"):
                 chromo = arguments["chromo"][0]
@@ -110,7 +116,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 ENDPOINTS = "/info/assembly/homo_sapiens/" + chromo
                 person = con_ensembl(ENDPOINTS)
                 print(person)
-                contents = read_html_file("chromosomeLength.html").render(context={"chromo": chromo, "start": start, "end": end, "l_genes": l_genes})
+                contents = read_html_file("geneList.html").render(context={"chromo": chromo, "start": start, "end": end, "l_genes": l_genes})
 
             else:
                 contents = Path('html/error.html').read_text()
