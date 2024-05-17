@@ -28,7 +28,19 @@ def con_ensembl(ENDPOINTS):
     person = json.loads(data1)
     return person
 
-
+def calculations(seq):
+    letters = ["A", "C", "G", "T"]
+    count1 = [seq.count("A"), seq.count("C"), seq.count("G"), seq.count("T")]
+    porc = [str(100 * seq.count("A") / len(seq)) + " %", str(100 * seq.count("C") / len(seq)) + " %", str(100 * seq.count("G") / len(seq)) + " %", str(100 * seq.count("T") / len(seq)) + " %"]
+    print(len(seq))
+    i = 0
+    response = []
+    while i < 4:
+        a = str(letters[i]) + " : " + str(count1[i]) + " (" + str(porc[i]) + ")" + "\n"
+        print(a)
+        response.append(a)
+        i += 1
+    return response
 
 class TestHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
@@ -97,25 +109,53 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
             elif path.startswith("/geneInfo"):
                 gene = arguments["gene"][0]
-                ENDPOINTS = "/lookup/symbol/homo_sapiens/"
+                ENDPOINTS = "/lookup/symbol/homo_sapiens/" + str(gene)
                 person = con_ensembl(ENDPOINTS)
                 id = person["id"]
-                contents = read_html_file("geneInfo.html").render(context={"gene": gene, "id": id, "start": start, "end": end, "n_chromo": n_chromo})
+                ENDPOINTS1 = "/sequence/id/" + id
+                person1 = con_ensembl(ENDPOINTS1)
+                sequence = person1["seq"]
+                length = len(sequence)
+                n_chromo = person["seq_region_name"]
+                start = person["start"]
+                end = person["end"]
+                print(person)
+                contents = read_html_file("geneInfo.html").render(context={"gene": gene, "id": id, "start": start, "end": end, "n_chromo": n_chromo, "length": length})
 
             elif path.startswith("/geneCalc"):
                 gene = arguments["gene"][0]
-                ENDPOINTS = "/lookup/symbol/homo_sapiens/"
+                ENDPOINTS = "/lookup/symbol/homo_sapiens/" + str(gene)
                 person = con_ensembl(ENDPOINTS)
                 id = person["id"]
+                ENDPOINTS1 = "/sequence/id/" + id
+                person1 = con_ensembl(ENDPOINTS1)
+                sequence = person1["seq"]
+                length = len(sequence)
+                length = len(sequence)
+                sequence = person1["seq"]
+                percentage = calculations(sequence)
                 contents = read_html_file("geneCalc.html").render(context={"gene": gene, "length": length, "percentage": percentage})
 
             elif path.startswith("/geneList"):
                 chromo = arguments["chromo"][0]
                 start = arguments["start"][0]
                 end = arguments["end"][0]
-                ENDPOINTS = "/info/assembly/homo_sapiens/" + chromo
+                ENDPOINTS = "/phenotype/region/homo_sapiens/" + chromo + ":" + start + "-" + end
                 person = con_ensembl(ENDPOINTS)
-                print(person)
+                l_genes = []
+                for e in person:
+                    if e["phenotype_associations"]:
+                        names = e["phenotype_associations"]
+                        for i in names:
+                            print(i)
+                            if i["attributes"]:
+                                names1 = i["attributes"]
+                                for ii in names1:
+                                    if ii["associated_gene"]:
+                                        name = ii["associated_gene"]
+                                        print(name)
+                                        l_genes.append(name)
+                print(l_genes)
                 contents = read_html_file("geneList.html").render(context={"chromo": chromo, "start": start, "end": end, "l_genes": l_genes})
 
             else:

@@ -10,6 +10,11 @@
 <br>
 Total length: {{context.length}}
 <br><br>
-Percentage: {{context.percentage}}
+Percentage:
+<ul>
+     {% for i in context.percentage %}
+    <li>{{i}}</li>
+     {% endfor %}
+ </ul>
 </body>
 </html>
