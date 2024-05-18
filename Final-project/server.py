@@ -143,18 +143,13 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 ENDPOINTS = "/phenotype/region/homo_sapiens/" + chromo + ":" + start + "-" + end
                 person = con_ensembl(ENDPOINTS)
                 l_genes = []
-                for e in person:
-                    if e["phenotype_associations"]:
-                        names = e["phenotype_associations"]
-                        for i in names:
-                            print(i)
-                            if i["attributes"]:
-                                names1 = i["attributes"]
-                                for ii in names1:
-                                    if ii["associated_gene"]:
-                                        name = ii["associated_gene"]
-                                        print(name)
-                                        l_genes.append(name)
+                
+                for n in person:
+                    if "phenotype_associations" in n.keys():
+                        for s in n["phenotype_associations"]:
+                            if "attributes" in s.keys():
+                                if "associated_gene" in s["attributes"]:
+                                    l_genes.append(s["attributes"]["associated_gene"])
                 print(l_genes)
                 contents = read_html_file("geneList.html").render(context={"chromo": chromo, "start": start, "end": end, "l_genes": l_genes})
 
